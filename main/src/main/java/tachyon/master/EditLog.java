@@ -46,7 +46,6 @@ import tachyon.util.CommonUtils;
  * Master operation journal.
  */
 public class EditLog {
-
   private final static Logger LOG = Logger.getLogger(Constants.LOGGER_TYPE);
 
   private static int mBackUpLogStartNum = -1;
@@ -59,21 +58,6 @@ public class EditLog {
     // See: JsonGenerator.QUOTE_FIELD_NAMES and JsonParser.ALLOW_UNQUOTED_FIELD_NAMES
     return new ObjectMapper().configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false).configure(
         SerializationFeature.CLOSE_CLOSEABLE, false);
-  }
-
-  public static void deleteCompletedLogs(String path, int upTo) {
-    UnderFileSystem ufs = UnderFileSystem.get(path);
-    String folder =
-        path.substring(0, path.lastIndexOf(Constants.PATH_SEPARATOR) + 1) + "completed";
-    try {
-      for (int i = 0; i < upTo; i ++) {
-        String toDelete = CommonUtils.concat(folder, i + ".editLog");
-        LOG.info("Deleting editlog " + toDelete);
-        ufs.delete(toDelete, true);
-      }
-    } catch (IOException e) {
-      CommonUtils.runtimeException(e);
-    }
   }
 
   /**
@@ -436,6 +420,21 @@ public class EditLog {
         new Operation(OperationType.DELETE, ++ mTransactionId).withParameter("fileId", fileId)
             .withParameter("recursive", recursive);
     writeOperation(operation);
+  }
+
+  public void deleteCompletedLogs(String path, int upTo) {
+    UnderFileSystem ufs = UnderFileSystem.get(path);
+    String folder =
+        path.substring(0, path.lastIndexOf(Constants.PATH_SEPARATOR) + 1) + "completed";
+    try {
+      for (int i = 0; i < upTo; i ++) {
+        String toDelete = CommonUtils.concat(folder, i + ".editLog");
+        LOG.info("Deleting editlog " + toDelete);
+        ufs.delete(toDelete, true);
+      }
+    } catch (IOException e) {
+      CommonUtils.runtimeException(e);
+    }
   }
 
   /**
