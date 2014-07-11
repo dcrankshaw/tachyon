@@ -28,6 +28,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.thrift.TException;
 
 import tachyon.Constants;
+import tachyon.Pair;
 import tachyon.client.InStream;
 import tachyon.client.OutStream;
 import tachyon.client.ReadType;
@@ -35,6 +36,7 @@ import tachyon.client.TachyonFS;
 import tachyon.client.TachyonFile;
 import tachyon.client.WriteType;
 import tachyon.client.kv.KVStore;
+import tachyon.client.kv.KVPartition;
 import tachyon.thrift.ClientBlockInfo;
 import tachyon.thrift.ClientFileInfo;
 import tachyon.thrift.TachyonException;
@@ -275,6 +277,34 @@ public class TFsShell {
     } else {
       System.out.println("The result is " + result.getInt());
     }
+    return 0;
+  }
+
+
+  /**
+   * Simple utility method to create a kv store and populate with String
+   * keys and values.
+   * Only used for simple testing so you don't have to write a Java program just to
+   * create a KV store.
+   */
+  public int kvput(String[] argv) throws IOException, TachyonException, TException {
+    if (argv.length < 3) {
+      System.out.println("Usage: tfs kvput <storePath> <k1,v1 k2,v2...>");
+      return -1;
+    }
+    String storePath = argv[1];
+    String key = argv[2];
+    KVStore store = KVStore.create(storePath);
+    KVPartition partition = store.createPartition(0);
+    for (int i = 2; i < argv.length; ++i) {
+        String[] strPair = argv[i].split(",");
+        if (strPair.length != 2) {
+            System.err.println("Key-value pairs must be of form <KEY,VALUE>");
+            return -1;
+        }
+        partition.put(strPair[0].getBytes(), strPair[1].getBytes());
+    }
+    partition.close();
     return 0;
   }
 
