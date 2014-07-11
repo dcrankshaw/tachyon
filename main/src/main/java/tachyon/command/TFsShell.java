@@ -572,6 +572,8 @@ public class TFsShell {
         exitCode = request(argv);
       } else if (cmd.equals("kvget")) {
         exitCode = kvget(argv);
+      } else if (cmd.equals("kvput")) {
+        exitCode = kvput(argv);
       } else {
         printUsage();
         return -1;
