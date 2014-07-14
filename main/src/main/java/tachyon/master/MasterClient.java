@@ -297,7 +297,9 @@ public class MasterClient {
   public synchronized ClientStorePartitionInfo kv_getPartitionWithStoreId(int storeId,
       ByteBuffer key) throws TException, IOException {
     while (!mIsShutdown) {
+        System.out.println("aaa.");
       connect();
+        System.out.println("bbb.");
       try {
         return mClient.kv_getPartitionWithStoreId(storeId, key);
       } catch (TachyonException e) {

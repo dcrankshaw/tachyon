@@ -1490,7 +1490,9 @@ public class MasterService {
 
     public ClientStorePartitionInfo kv_getPartitionWithStoreId(int storeId, ByteBuffer key) throws TachyonException, org.apache.thrift.TException
     {
+        System.out.println("Sending abc MasterService");
       send_kv_getPartitionWithStoreId(storeId, key);
+        System.out.println("send_kv_getPartitionWithStoreId returned MasterService");
       return recv_kv_getPartitionWithStoreId();
     }
 

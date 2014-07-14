@@ -53,13 +53,19 @@ public class KVStore {
   }
 
   public ByteBuffer get(byte[] key) throws IOException, TachyonException, TException {
+      System.out.println("mPartitions length: " + mPartitions.size());
     ByteBuffer tKey = ByteBuffer.wrap(key);
+    System.out.println("getting client partition.");
     ClientStorePartitionInfo partition = getKVPartition(tKey);
+    System.out.println("Got a partition.");
     if (partition == null) {
+      System.out.println("Partition was null.");
       partition = TFS.kv_getPartitionWithStoreId(STORE_ID, tKey);
       if (partition == null) {
+          System.out.println("Double null.");
         return null;
       }
+      System.out.println("refound partition");
       for (int k = mPartitions.size(); k <= partition.partitionIndex; k ++) {
         mPartitions.add(null);
       }

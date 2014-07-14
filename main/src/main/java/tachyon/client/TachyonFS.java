@@ -988,7 +988,9 @@ public class TachyonFS {
 
   public ClientStorePartitionInfo kv_getPartitionWithStoreId(int storeId, ByteBuffer key)
       throws IOException {
+    System.out.println("About to connect.");
     connect();
+    System.out.println("Connected.");
     try {
       return mMasterClient.kv_getPartitionWithStoreId(storeId, key);
     } catch (TException e) {

@@ -270,12 +270,15 @@ public class TFsShell {
     }
     String storePath = argv[1];
     String key = argv[2];
+    System.out.println("About to get store.");
     KVStore store = KVStore.get(storePath);
+    System.out.println("Got store. Getting key.");
     ByteBuffer result = store.get(key.getBytes());
+    System.out.println("Got key.");
     if (result.limit() == 0) {
       System.out.println("Key " + key + " does not exist in the store.");
     } else {
-      System.out.println("The result is " + result.getInt());
+      System.out.println("The result is " + result.toString());
     }
     return 0;
   }
@@ -298,6 +301,9 @@ public class TFsShell {
     KVPartition partition = store.createPartition(0);
     for (int i = 2; i < argv.length; ++i) {
         String[] strPair = argv[i].split(",");
+        /* byte[] first = ByteBuffer.allocate(4).putInt(Integer.parseInt(strPair[0])).array(); */
+        /* byte[] second = ByteBuffer.allocate(4).putInt(Integer.parseInt(strPair[1])).array(); */
+        /* Integer second = Integer.valueOf(Integer.parseInt(strPair[1])); */
         if (strPair.length != 2) {
             System.err.println("Key-value pairs must be of form <KEY,VALUE>");
             return -1;
