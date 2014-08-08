@@ -1,6 +1,7 @@
 package tachyon.r.sorted;
 
 import java.nio.ByteBuffer;
+import com.google.common.primitives.UnsignedBytes;
 
 public class Utils {
   /**
@@ -25,10 +26,9 @@ public class Utils {
     int pb = 0;
 
     while (pa < a.length && pb < b.length) {
-      if (a[pa] < b[pb]) {
-        return -1;
-      } else if (a[pa] > b[pb]) {
-        return 1;
+      int compResult = UnsignedBytes.compare(a[pa], b[pb]);
+      if (compResult != 0) {
+        return compResult;
       }
       pa ++;
       pb ++;
@@ -53,10 +53,9 @@ public class Utils {
     int pb = b.position();
 
     while (pa < a.limit() && pb < b.limit()) {
-      if (a.array()[pa] < b.array()[pb]) {
-        return -1;
-      } else if (a.array()[pa] > b.array()[pb]) {
-        return 1;
+      int compResult = UnsignedBytes.compare(a.array()[pa], b.array()[pb]);
+      if (compResult != 0) {
+        return compResult;
       }
       pa ++;
       pb ++;
