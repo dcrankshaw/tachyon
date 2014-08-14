@@ -31,7 +31,7 @@ export JAVA="$JAVA_HOME/bin/java"
 export TACHYON_MASTER_ADDRESS=localhost
 export TACHYON_UNDERFS_ADDRESS=/tmp
 #export TACHYON_UNDERFS_ADDRESS=hdfs://localhost:9000
-export TACHYON_WORKER_MEMORY_SIZE=20GB
+export TACHYON_WORKER_MEMORY_SIZE=30GB
 export TACHYON_UNDERFS_HDFS_IMPL=org.apache.hadoop.hdfs.DistributedFileSystem
 
 CONF_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
