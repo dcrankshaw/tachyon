@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Arrays;
 
 import org.apache.thrift.TDeserializer;
 import org.apache.thrift.TException;
@@ -67,7 +68,11 @@ public class ClientStore extends ClientStoreBase {
       return null;
     }
     if (pIds.size() > 1) {
-      throw new IOException("More than one partition containing the key;");
+      String allPIds = "";
+      for (Integer i: pIds) {
+        allPIds += ", " + i;
+      }
+      throw new IOException("More than one partition containing the key: " + Arrays.toString(key) + " partitions: " + allPIds);
     }
 
     SortedStorePartitionInfo info = mReadPartitions.get(pIds.get(0));
