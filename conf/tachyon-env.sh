@@ -14,7 +14,7 @@
 
 # The following gives an example:
 
-# source ~/ec2-variables.sh
+source ~/ec2-variables.sh
 if [[ `uname -a` == Darwin* ]]; then
   # Assuming Mac OS X
   export JAVA_HOME=${JAVA_HOME:-$(/usr/libexec/java_home)}
