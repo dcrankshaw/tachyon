@@ -31,7 +31,7 @@ fi
 export JAVA="$JAVA_HOME/bin/java"
 export TACHYON_MASTER_ADDRESS=$VELOX_TACHYON_MASTER
 # export TACHYON_MASTER_ADDRESS=localhost
-export TACHYON_UNDERFS_ADDRESS=s3n://veloxms-tachyon-underfilesystem/tachyon-files
+export TACHYON_UNDERFS_ADDRESS=s3://veloxms-tachyon-underfilesystem/tachyon-files
 #export TACHYON_UNDERFS_ADDRESS=hdfs://localhost:9000
 export TACHYON_WORKER_MEMORY_SIZE=$VELOX_TACHYON_MEM
 #export TACHYON_UNDERFS_HDFS_IMPL=org.apache.hadoop.hdfs.DistributedFileSystem
@@ -52,8 +52,8 @@ export TACHYON_JAVA_OPTS+="
   -Dtachyon.master.journal.folder=$TACHYON_UNDERFS_ADDRESS/tachyon/journal/
   -Dorg.apache.jasper.compiler.disablejsr199=true
   -Djava.net.preferIPv4Stack=true
-  -Dfs.s3n.awsAccessKeyId=$S3_ACCESS_KEY
-  -Dfs.s3n.awsSecretAccessKey=$S3_SECRET_KEY
+  -Dfs.s3.awsAccessKeyId=$S3_ACCESS_KEY
+  -Dfs.s3.awsSecretAccessKey=$S3_SECRET_KEY
 "
 
 # Master specific parameters. Default to TACHYON_JAVA_OPTS.
