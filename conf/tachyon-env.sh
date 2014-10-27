@@ -52,6 +52,8 @@ export TACHYON_JAVA_OPTS+="
   -Dtachyon.master.journal.folder=$TACHYON_UNDERFS_ADDRESS/tachyon/journal/
   -Dorg.apache.jasper.compiler.disablejsr199=true
   -Djava.net.preferIPv4Stack=true
+  -Dfs.s3n.awsAccessKeyId=$S3_ACCESS_KEY
+  -Dfs.s3n.awsSecretAccessKey=$S3_SECRET_KEY
 "
 
 # Master specific parameters. Default to TACHYON_JAVA_OPTS.
