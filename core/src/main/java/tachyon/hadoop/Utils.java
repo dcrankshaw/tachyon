@@ -35,6 +35,7 @@ public final class Utils {
   public static void addS3Credentials(Configuration conf) {
     String accessKeyConf = "fs.s3n.awsAccessKeyId";
     if (System.getProperty(accessKeyConf) != null && conf.get(accessKeyConf) == null) {
+      LOG.warn("Adding S3 credentials: " + System.getProperty(accessKeyConf));
       conf.set(accessKeyConf, System.getProperty(accessKeyConf));
     }
     String secretKeyConf = "fs.s3n.awsSecretAccessKey";
