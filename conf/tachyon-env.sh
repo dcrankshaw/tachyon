@@ -31,7 +31,7 @@ fi
 export JAVA="$JAVA_HOME/bin/java"
 export TACHYON_MASTER_ADDRESS=$VELOX_TACHYON_MASTER
 # export TACHYON_MASTER_ADDRESS=localhost
-export TACHYON_UNDERFS_ADDRESS=s3://veloxms-tachyon-underfilesystem/tachyon-files
+export TACHYON_UNDERFS_ADDRESS=s3n://veloxms-tachyon-underfilesystem/tachyon-files
 #export TACHYON_UNDERFS_ADDRESS=hdfs://localhost:9000
 export TACHYON_WORKER_MEMORY_SIZE=$VELOX_TACHYON_MEM
 #export TACHYON_UNDERFS_HDFS_IMPL=org.apache.hadoop.hdfs.DistributedFileSystem
