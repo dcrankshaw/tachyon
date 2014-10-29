@@ -5,6 +5,8 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 
 import org.apache.log4j.Logger;
 import org.apache.thrift.TDeserializer;
@@ -92,9 +94,13 @@ public class StoresInfo extends MasterComponent {
       } catch (IOException e) {
         throw new TachyonException(e.getMessage());
       }
+      StringWriter sw = new StringWriter();
+      PrintWriter pw = new PrintWriter(sw);
+      (new Exception("Stack Trace")).printStackTrace(pw);
       res.setLocation(blockInfo.get(0).locations.get(0));
       LOG.info("MasterPartition empty location: blockinfo(" + blockInfo
-          + "); SortedStorePartitionInfo" + res);
+          + "); SortedStorePartitionInfo" + res + " STACKTRACE: " + sw.toString());
+
     } else {
       LOG.info("MasterPartition with locations: " + res);
     }
