@@ -1359,7 +1359,7 @@ public class MasterInfo extends ImageWriter {
         throw new FileDoesNotExistException("FileId " + fileId + " does not exist.");
       }
       List<ClientBlockInfo> ret = ((InodeFile) inode).getClientBlockInfos();
-      LOG.debug("getFileLocations: " + fileId + ret);
+      LOG.debug("CRANKSHAW getFileLocations: " + fileId + ret);
       return ret;
     }
   }

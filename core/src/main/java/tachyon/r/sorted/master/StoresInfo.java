@@ -78,6 +78,7 @@ public class StoresInfo extends MasterComponent {
     if (!mStores.containsKey(storeId)) {
       throw new TachyonException("Store does not exist: " + storeId);
     }
+    
     MasterPartition partition = mStores.get(storeId).getPartition(key);
 
     if (partition == null) {
