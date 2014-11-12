@@ -18,6 +18,7 @@ import org.apache.thrift.protocol.TBinaryProtocol;
 
 import com.google.common.collect.ImmutableList;
 
+import tachyon.Constants;
 import tachyon.TachyonURI;
 import tachyon.r.ClientStoreBase;
 import tachyon.r.sorted.master.MasterOperationType;
@@ -85,8 +86,8 @@ public class ClientStore extends ClientStoreBase {
       throw new IOException(e);
     }
 
-    InetSocketAddress workerAddress =
-        new InetSocketAddress(info.location.mHost, info.location.mPort);
+    int port = (info.location.mPort == -1) ? Constants.DEFAULT_WORKER_PORT : info.location.mPort;
+    InetSocketAddress workerAddress = new InetSocketAddress(info.location.mHost, port);
     byte[] result =
         mTachyonFS
             .workerProcess(

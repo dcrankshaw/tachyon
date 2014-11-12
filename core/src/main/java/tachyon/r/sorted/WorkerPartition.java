@@ -2,7 +2,10 @@ package tachyon.r.sorted;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import tachyon.Constants;
 import tachyon.client.TachyonByteBuffer;
 import tachyon.client.TachyonFS;
 import tachyon.client.TachyonFile;
@@ -10,6 +13,7 @@ import tachyon.io.Utils;
 import tachyon.thrift.SortedStorePartitionInfo;
 
 public class WorkerPartition {
+  private static final Logger LOG = LoggerFactory.getLogger(Constants.LOGGER_TYPE);
   private TachyonFS mTFS;
   private SortedStorePartitionInfo mInfo;
   private TachyonByteBuffer mData = null;
@@ -72,10 +76,18 @@ public class WorkerPartition {
     if (null == mData) {
       TachyonFile file = mTFS.getFile(mInfo.getDataFileId());
       mData = file.readByteBuffer();
+      if (null == mData) {
+        file.recache();
+        mData = file.readByteBuffer();
+      }
     }
     if (null == mLoadedIndex) {
       TachyonFile file = mTFS.getFile(mInfo.getIndexFileId());
       mIndex = file.readByteBuffer();
+      if (null == mIndex) {
+        file.recache();
+        mIndex = file.readByteBuffer();
+      }
 
       ByteBuffer data = mIndex.DATA;
       int size = data.remaining() / 4;
